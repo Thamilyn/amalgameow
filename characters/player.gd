@@ -22,8 +22,8 @@ const RUN_THRESHOLD     : float = 0.15    # seconds between two taps to trigger 
 const JUMP_VELOCITY     : float = -520.0  # initial upward z-velocity
 const GRAVITY           : float = 1200.0  # z-axis gravity (px / s²)
 const DODGE_SPEED       : float = 400.0   # px / s during dodge roll
-const DODGE_DURATION    : float = 0.32    # seconds
-const DODGE_IFRAME_TIME : float = 0.28    # seconds of invincibility inside dodge
+const DODGE_DURATION    : float = 0.5    # seconds
+const DODGE_IFRAME_TIME : float = 0.3    # seconds of invincibility inside dodge
 const KNOCKBACK_DECAY   : float = 8.0     # how fast knockback velocity bleeds off
 const MAX_COMBO_HITS    : int   = 3       # light attacks before the finisher
 const COMBO_WINDOW      : float = 0.55    # seconds to keep combo alive
@@ -56,6 +56,7 @@ enum State {
 @onready var anim         : AnimationPlayer = $AnimationPlayer   # optional – safe-guarded below
 @onready var hitbox       : Area2D          = $Hitbox            # optional – safe-guarded below
 @onready var hurtbox      : Area2D          = $Hurtbox           # optional – safe-guarded below
+@onready var animated_sprite2d : AnimatedSprite2D = $AnimatedSprite2D
 
 # ── Internal state ───────────────────────────────────────────────────────────
 
@@ -113,6 +114,8 @@ func _ready() -> void:
 		hitbox = null
 	if not has_node("Hurtbox"):
 		hurtbox = null
+	if not has_node("AnimatedSprite2D"):
+		animated_sprite2d = null
 
 	if hurtbox:
 		hurtbox.area_entered.connect(_on_hurtbox_area_entered)
@@ -139,7 +142,7 @@ func _physics_process(delta: float) -> void:
 		return
 
 	_state_timer += delta
-
+	#print('Current anim: ' + animated_sprite2d.animation)
 	match state:
 		State.IDLE:
 			_state_idle(delta)
@@ -172,6 +175,8 @@ func _physics_process(delta: float) -> void:
 
 	# Apply visual height offset from jump arc.
 	sprite.position.y = _z_pos
+	if animated_sprite2d:
+		animated_sprite2d.position.y = _z_pos
 
 # ---------------------------------------------------------------------------
 # Input polling (called every frame from _process)
@@ -234,7 +239,7 @@ func _enter_state(new_state: State) -> void:
 	prev_state  = state
 	state       = new_state
 	_state_timer = 0.0
-
+	#print('Entering: ', str(new_state))
 	match new_state:
 		State.IDLE:
 			_play_anim("idle")
@@ -272,14 +277,46 @@ func _enter_state(new_state: State) -> void:
 			_is_invincible = true
 			_play_anim("get_up")
 
-func _play_anim(anim_name: String) -> void:
-	if anim == null:
+# Maps internal state animation names to the AnimatedSprite2D animation library.
+const ANIM_MAP : Dictionary = {
+	"idle":             "idle",
+	"walk":             "walk",
+	"run":              "run",
+	"jump":             "jump",
+	"attack_light_1":   "punch_jab",
+	"attack_light_2":   "punch_jab",
+	"attack_light_3":   "punch_cross",
+	"attack_finisher":  "punch",
+	"attack_air":       "air_spin",
+	"dodge":            "roll",
+	"hurt":             "idle",
+	"knocked_down":     "death",
+	"get_up":           "idle",
+}
+
+# Animations that must loop continuously while their state is active.
+const LOOPING_ANIMS : Array[String] = ["idle", "walk", "run"]
+
+# Updates _facing and immediately flips the AnimatedSprite2D.
+func _set_facing(dir: float) -> void:
+	if dir == 0.0:
 		return
-	if anim.has_animation(anim_name):
-		anim.play(anim_name)
-	else:
-		# Fallback: just stop so we don't loop a stale animation.
-		anim.stop()
+	_facing = sign(dir)
+	if animated_sprite2d:
+		animated_sprite2d.flip_h = _facing < 0.0
+
+func _play_anim(anim_name: String) -> void:
+	if animated_sprite2d == null:
+		return
+	var mapped : String = ANIM_MAP.get(anim_name, "run")
+	# Force the correct loop mode on the SpriteFrames resource before playing
+	# so movement animations loop natively without needing external restarts.
+	#if animated_sprite2d.sprite_frames and animated_sprite2d.sprite_frames.has_animation(mapped):
+		#animated_sprite2d.sprite_frames.set_animation_loop(mapped, mapped in LOOPING_ANIMS)
+	# Avoid restarting the same animation if it is already playing.
+	if animated_sprite2d.animation == mapped and animated_sprite2d.is_playing():
+		return
+	animated_sprite2d.play(mapped)
 
 # ---------------------------------------------------------------------------
 # State handlers
@@ -323,10 +360,10 @@ func _state_walk(delta: float) -> void:
 		dir = dir.normalized()
 		velocity = dir * WALK_SPEED + _knockback
 		if h != 0.0:
-			_facing = sign(h)
-			sprite.scale.x = _facing
+			_set_facing(h)
 	else:
 		velocity = _knockback
+		print('entering idle')
 		_enter_state(State.IDLE)
 		return
 
@@ -357,10 +394,10 @@ func _state_run(delta: float) -> void:
 		dir = dir.normalized()
 		velocity = dir * RUN_SPEED + _knockback
 		if h != 0.0:
-			_facing = sign(h)
-			sprite.scale.x = _facing
+			_set_facing(h)
 	else:
 		_is_running = false
+		print('entering idle')
 		_enter_state(State.IDLE)
 		return
 
@@ -391,8 +428,7 @@ func _state_jump(delta: float) -> void:
 	velocity = Vector2(h, v).normalized() * WALK_SPEED * air_control + _knockback
 
 	if h != 0.0:
-		_facing = sign(h)
-		sprite.scale.x = _facing
+		_set_facing(h)
 
 	# Z arc.
 	_z_velocity += GRAVITY * delta
