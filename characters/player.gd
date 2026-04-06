@@ -119,7 +119,8 @@ func _ready() -> void:
 
 	if hurtbox:
 		hurtbox.area_entered.connect(_on_hurtbox_area_entered)
-
+	
+	
 	_enter_state(State.IDLE)
 
 # ---------------------------------------------------------------------------
@@ -142,7 +143,6 @@ func _physics_process(delta: float) -> void:
 		return
 
 	_state_timer += delta
-	#print('Current anim: ' + animated_sprite2d.animation)
 	match state:
 		State.IDLE:
 			_state_idle(delta)
@@ -304,6 +304,12 @@ func _set_facing(dir: float) -> void:
 	_facing = sign(dir)
 	if animated_sprite2d:
 		animated_sprite2d.flip_h = _facing < 0.0
+	if _facing < 0.0 and hitbox.position.x > 0:
+		hitbox.position.x *= -1.0
+	elif _facing > 0.0 and hitbox.position.x < 0:
+		hitbox.position.x *= -1.0
+		
+		
 
 func _play_anim(anim_name: String) -> void:
 	if animated_sprite2d == null:
@@ -363,7 +369,6 @@ func _state_walk(delta: float) -> void:
 			_set_facing(h)
 	else:
 		velocity = _knockback
-		print('entering idle')
 		_enter_state(State.IDLE)
 		return
 
@@ -397,7 +402,6 @@ func _state_run(delta: float) -> void:
 			_set_facing(h)
 	else:
 		_is_running = false
-		print('entering idle')
 		_enter_state(State.IDLE)
 		return
 
@@ -424,7 +428,7 @@ func _state_jump(delta: float) -> void:
 	# Horizontal movement is preserved in the air (reduced control).
 	var h := Input.get_axis("ui_left", "ui_right")
 	var v := Input.get_axis("ui_up",   "ui_down")
-	var air_control := 0.6
+	var air_control := 1.0
 	velocity = Vector2(h, v).normalized() * WALK_SPEED * air_control + _knockback
 
 	if h != 0.0:
@@ -433,6 +437,7 @@ func _state_jump(delta: float) -> void:
 	# Z arc.
 	_z_velocity += GRAVITY * delta
 	_z_pos      += _z_velocity * delta
+	move_areas_on_jump(_z_pos)
 
 	# Landed?
 	if _z_pos >= 0.0:
@@ -633,6 +638,12 @@ func take_damage(damage: int, knockback_vector: Vector2 = Vector2.ZERO) -> void:
 		_enter_state(State.KNOCKED_DOWN)
 	else:
 		_enter_state(State.HURT)
+		
+		
+func move_areas_on_jump(z_pos : float) -> void:
+	$CollisionShape2D.position.y = z_pos
+	hitbox.position.y = z_pos
+	hurtbox.position.y = z_pos
 
 # ---------------------------------------------------------------------------
 # Hurtbox Area2D callback
@@ -643,3 +654,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 		var dmg : int = area.get_meta("damage")
 		var kb  : Vector2 = (global_position - area.global_position).normalized() * 200.0
 		take_damage(dmg, kb)
+
+
+func _on_hitbox_body_entered(body: Node2D) -> void:
+	body.take_damage(hitbox.get_meta('damage', 1))

@@ -23,6 +23,10 @@ MadTalkGlobals="*uid://domdph40m3s8i"
 
 enabled=PackedStringArray("res://addons/madtalk/plugin.cfg")
 
+[global_group]
+
+player=""
+
 [input]
 
 attack_light={
@@ -49,6 +53,12 @@ dodge={
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":4,"pressure":0.0,"pressed":false,"script":null)
 ]
 }
+
+[layer_names]
+
+2d_physics/layer_1="world"
+2d_physics/layer_2="player"
+2d_physics/layer_3="enemies"
 
 [physics]
 
