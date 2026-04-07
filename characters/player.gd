@@ -66,6 +66,7 @@ var prev_state      : State = State.IDLE
 # Movement
 var _z_pos          : float = 0.0   # visual height above ground (for jump arc)
 var _z_velocity     : float = 0.0   # vertical (jump) velocity
+var _air_attack_used : bool  = false  # only one air attack allowed per jump
 var _knockback      : Vector2 = Vector2.ZERO
 var _facing         : float = 1.0   # +1 right / -1 left
 
@@ -119,8 +120,8 @@ func _ready() -> void:
 
 	if hurtbox:
 		hurtbox.area_entered.connect(_on_hurtbox_area_entered)
-	
-	
+
+
 	_enter_state(State.IDLE)
 
 # ---------------------------------------------------------------------------
@@ -242,6 +243,7 @@ func _enter_state(new_state: State) -> void:
 	#print('Entering: ', str(new_state))
 	match new_state:
 		State.IDLE:
+			_air_attack_used = false
 			_play_anim("idle")
 			velocity = Vector2.ZERO
 		State.WALK:
@@ -259,6 +261,7 @@ func _enter_state(new_state: State) -> void:
 			_play_anim("attack_finisher")
 		State.ATTACK_AIR:
 			_attack_hit = false
+			_air_attack_used = true
 			_play_anim("attack_air")
 		State.DODGE:
 			_dodge_timer   = DODGE_DURATION
@@ -308,8 +311,8 @@ func _set_facing(dir: float) -> void:
 		hitbox.position.x *= -1.0
 	elif _facing > 0.0 and hitbox.position.x < 0:
 		hitbox.position.x *= -1.0
-		
-		
+
+
 
 func _play_anim(anim_name: String) -> void:
 	if animated_sprite2d == null:
@@ -446,7 +449,7 @@ func _state_jump(delta: float) -> void:
 		_enter_state(State.IDLE)
 		return
 
-	if _consume_buffered("attack_light"):
+	if _consume_buffered("attack_light") and not _air_attack_used:
 		_enter_state(State.ATTACK_AIR)
 		return
 	if _consume_buffered("dodge"):
@@ -638,8 +641,8 @@ func take_damage(damage: int, knockback_vector: Vector2 = Vector2.ZERO) -> void:
 		_enter_state(State.KNOCKED_DOWN)
 	else:
 		_enter_state(State.HURT)
-		
-		
+
+
 func move_areas_on_jump(z_pos : float) -> void:
 	$CollisionShape2D.position.y = z_pos
 	hitbox.position.y = z_pos
