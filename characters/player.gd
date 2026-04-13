@@ -240,7 +240,6 @@ func _enter_state(new_state: State) -> void:
 	prev_state  = state
 	state       = new_state
 	_state_timer = 0.0
-	#print('Entering: ', str(new_state))
 	match new_state:
 		State.IDLE:
 			_air_attack_used = false
@@ -338,6 +337,7 @@ func _state_idle(_delta: float) -> void:
 	var h := Input.get_axis("ui_left", "ui_right")
 	var v := Input.get_axis("ui_up",   "ui_down")
 	var moving := Vector2(h, v).length() > 0.1
+	
 
 	if _consume_buffered("jump"):
 		_enter_state(State.JUMP)
