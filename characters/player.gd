@@ -58,6 +58,8 @@ enum State {
 @onready var hurtbox      : Area2D          = $Hurtbox           # optional – safe-guarded below
 @onready var animated_sprite2d : AnimatedSprite2D = $AnimatedSprite2D
 
+
+
 # ── Internal state ───────────────────────────────────────────────────────────
 
 var state           : State = State.IDLE
@@ -120,7 +122,6 @@ func _ready() -> void:
 
 	if hurtbox:
 		hurtbox.area_entered.connect(_on_hurtbox_area_entered)
-
 
 	_enter_state(State.IDLE)
 

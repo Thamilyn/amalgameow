@@ -221,10 +221,14 @@ animations = [{
 "speed": 12.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_lpqby"]
+radius = 7.071068
+
 [node name="BatEnemy" type="CharacterBody2D" unique_id=486108783]
 collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_lpqby")
+attack_range = 35.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1042686419]
 shape = SubResource("CircleShape2D_m6xjb")
@@ -232,4 +236,16 @@ shape = SubResource("CircleShape2D_m6xjb")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=524481256]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_1b2rx")
-animation = &"flight"
+animation = &"attack"
+
+[node name="Hitbox" type="Area2D" parent="." unique_id=722300511]
+position = Vector2(17, 0)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=560755358]
+shape = SubResource("CircleShape2D_lpqby")
+disabled = true
+debug_color = Color(0.8641678, 0.28714043, 0.5521792, 0.41960785)
+
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]

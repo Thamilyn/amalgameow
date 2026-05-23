@@ -20,6 +20,7 @@ enum States {
 @export var chase_speed            := 120.0
 @export var detection_range        := 200.0
 @export var attack_range           := 40.0
+@export var attack_damage          := 10.0
 ## How far the player can be before the bat gives up chasing
 @export var leash_range            := 320.0
 
@@ -28,6 +29,7 @@ enum States {
 # ---------------------------------------------------------------------------
 
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
+@onready var hitbox : Area2D = $Hitbox
 
 # ---------------------------------------------------------------------------
 # State vars
@@ -43,6 +45,9 @@ var _patrol_going_b:  bool = true   # true → heading toward B, false → headi
 
 # Guards so we don't re-enter the same state
 var _attack_in_progress: bool = false
+
+# Last known facing direction (true = left)
+var _facing_left: bool = false
 
 # ---------------------------------------------------------------------------
 # Ready
@@ -86,7 +91,7 @@ func _state_patrol() -> void:
 		return
 
 	velocity = to_target.normalized() * patrol_speed
-	anim.flip_h = velocity.x < 0.0
+	_set_facing(velocity.x < 0.0)
 	move_and_slide()
 
 	# Transition: player enters detection range
@@ -115,7 +120,7 @@ func _state_chase() -> void:
 	# Move toward player
 	var direction: Vector2 = (player.global_position - global_position).normalized()
 	velocity = direction * chase_speed
-	anim.flip_h = velocity.x < 0.0
+	_set_facing(velocity.x < 0.0)
 	move_and_slide()
 
 
@@ -146,6 +151,7 @@ func _enter_state(new_state: States) -> void:
 
 		States.Attack:
 			_attack_in_progress = true
+			$Hitbox/CollisionShape2D.disabled = false
 			anim.play("attack")
 			# Return to Chase once the attack animation ends
 			if not anim.animation_finished.is_connected(_on_attack_finished):
@@ -167,6 +173,7 @@ func _on_attack_finished() -> void:
 		return
 
 	# Decide where to go after the attack
+	$Hitbox/CollisionShape2D.disabled = true
 	if is_instance_valid(player):
 		var dist: float = global_position.distance_to(player.global_position)
 		if dist <= attack_range:
@@ -185,6 +192,16 @@ func _on_attack_finished() -> void:
 func _on_death_finished() -> void:
 	queue_free()
 
+
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
+
+func _set_facing(facing_left: bool) -> void:
+	_facing_left = facing_left
+	anim.flip_h = facing_left
+	hitbox.position.x = -abs(hitbox.position.x) if facing_left else abs(hitbox.position.x)
+
 # ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------
@@ -194,3 +211,8 @@ func take_damage(_damage: int = 1) -> void:
 	if current_state == States.Die:
 		return
 	_enter_state(States.Die)
+
+
+func _on_hitbox_body_entered(body: Node2D) -> void:
+	print(body)
+	body.take_damage(attack_damage)

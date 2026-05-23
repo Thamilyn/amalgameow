@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://cct8k7884o8fb"]
+
+[ext_resource type="Script" uid="uid://crqcb7uu0rjjr" path="res://scenes/hp_bar_component.gd" id="1_rspjh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rspjh"]
+bg_color = Color(0.98271793, 0.35899857, 0.34458092, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uvp42"]
+bg_color = Color(3.5616756e-06, 0.7168664, 0.38695812, 1)
+
+[sub_resource type="Theme" id="Theme_elkq2"]
+ProgressBar/styles/background = SubResource("StyleBoxFlat_rspjh")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_uvp42")
+
+[node name="HPBarComponent" type="Control" unique_id=710309823]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_rspjh")
+
+[node name="HPBar" type="ProgressBar" parent="." unique_id=1895879602]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 782.0
+offset_top = 32.0
+offset_right = 1096.0
+offset_bottom = 59.0
+grow_horizontal = 0
+theme = SubResource("Theme_elkq2")
+show_percentage = false
+
+[node name="Label" type="Label" parent="." unique_id=1820350771]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 784.0
+offset_right = 824.0
+offset_bottom = 23.0
+grow_horizontal = 0
+text = "HP"
