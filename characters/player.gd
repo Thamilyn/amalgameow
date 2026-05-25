@@ -292,7 +292,7 @@ const ANIM_MAP : Dictionary = {
 	"attack_finisher":  "punch",
 	"attack_air":       "air_spin",
 	"dodge":            "roll",
-	"hurt":             "idle",
+	"hurt":             "hurt",
 	"knocked_down":     "death",
 	"get_up":           "idle",
 }
@@ -629,12 +629,14 @@ func _activate_hitbox(damage: int) -> void:
 # ---------------------------------------------------------------------------
 
 func take_damage(damage: int, knockback_vector: Vector2 = Vector2.ZERO) -> void:
-	if _is_invincible:
+	if _is_invincible or state == State.KNOCKED_DOWN:
 		return
 
 	health = max(0, health - damage)
 	_knockback = knockback_vector
 	health_changed.emit(health)
+	
+	_play_anim("hurt")
 
 	_hitstop_timer = HITSTOP_DURATION
 
@@ -662,3 +664,9 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	body.take_damage(hitbox.get_meta('damage', 1))
+
+func reset_state() -> void:
+	health = max_health
+	health_changed.emit(health)
+	state = State.IDLE
+	_play_anim("idle")

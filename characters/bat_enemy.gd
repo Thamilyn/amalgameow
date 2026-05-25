@@ -214,5 +214,4 @@ func take_damage(_damage: int = 1) -> void:
 
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
-	print(body)
 	body.take_damage(attack_damage)

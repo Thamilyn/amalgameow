@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://d15lvps6c7f42"]
 
+[ext_resource type="Script" uid="uid://6jlel3cn2pe7" path="res://scenes/main.gd" id="1_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://c1bobapo1vmuo" path="res://characters/player.tscn" id="1_o5qli"]
 [ext_resource type="PackedScene" uid="uid://d1jj72r64jktq" path="res://characters/bat_enemy.tscn" id="2_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://cct8k7884o8fb" path="res://scenes/hp_bar_component.tscn" id="3_sugp2"]
@@ -97,7 +98,9 @@ func _physics_process(delta: float) -> void:
 	)
 "
 
-[node name="Main" type="Node2D" unique_id=126025830]
+[node name="Main" type="Node2D" unique_id=126025830 node_paths=PackedStringArray("player")]
+script = ExtResource("1_jyhfs")
+player = NodePath("Player")
 
 [node name="StageVisual" type="Node2D" parent="." unique_id=2072822378]
 script = SubResource("GDScript_ground_visual")
@@ -131,6 +134,7 @@ target = NodePath("../Player")
 
 [node name="BatEnemy" parent="." unique_id=486108783 instance=ExtResource("2_0wfyh")]
 position = Vector2(1007.43134, 353.0159)
+attack_damage = 50.0
 
 [node name="UILayer" type="CanvasLayer" parent="." unique_id=430399700]
 

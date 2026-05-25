@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://dlpcjms4mfd64"]
+
+[ext_resource type="Script" uid="uid://ca7h4xhrangig" path="res://scenes/game_over_ui.gd" id="1_ovv0w"]
+
+[node name="GameOverUI" type="Panel" unique_id=1891193993]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ovv0w")
+
+[node name="Label" type="Label" parent="." unique_id=1304279203]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -87.0
+offset_top = -30.5
+offset_right = 87.0
+offset_bottom = 14.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+text = "Game Over"
+
+[node name="Button" type="Button" parent="." unique_id=1372413087]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.5
+offset_top = 32.5
+offset_right = 40.5
+offset_bottom = 63.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Try Again"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
