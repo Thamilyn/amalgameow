@@ -585,13 +585,16 @@ func _state_hurt(delta: float) -> void:
 # ── KNOCKED_DOWN ──────────────────────────────────────────────────────────────
 func _state_knocked_down(_delta: float) -> void:
 	velocity = _knockback * 0.5
+	
+	if health <= 0:
+		died.emit()
 
-	if _state_timer >= 1.2:
+	if _state_timer >= 1.0:
 		if health > 0:
 			_enter_state(State.GET_UP)
-		else:
-			# Dead – emit signal and let the game handle it.
-			died.emit()
+		#else:
+			## Dead – emit signal and let the game handle it.
+			#died.emit()
 
 	move_and_slide()
 

@@ -26,6 +26,7 @@ enabled=PackedStringArray("res://addons/madtalk/plugin.cfg")
 [global_group]
 
 player=""
+enemies=""
 
 [input]
 
