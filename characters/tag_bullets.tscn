@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://fu7yxihukvo8"]
+
+[ext_resource type="Texture2D" uid="uid://bhj1tdclm78gt" path="res://assets/tag_bullet.png" id="1_fwmc4"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3u8fy"]
+radius = 25.019993
+
+[node name="TagBullets" type="Area2D" unique_id=175673320]
+collision_layer = 0
+collision_mask = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1090434970]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_fwmc4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1177854338]
+shape = SubResource("CircleShape2D_3u8fy")

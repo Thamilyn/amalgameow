@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://cvkr2a2metxnj"]
+
+[ext_resource type="Script" uid="uid://brk2dqw7fxe1m" path="res://characters/tag_enemy.gd" id="1_dny3k"]
+[ext_resource type="Texture2D" uid="uid://uucjckkhlk3i" path="res://assets/tag.png" id="1_ymbj1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dny3k"]
+radius = 39.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ymbj1"]
+radius = 157.02866
+
+[node name="TagEnemy" type="CharacterBody2D" unique_id=608095612]
+script = ExtResource("1_dny3k")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=72696699]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_ymbj1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1242538412]
+shape = SubResource("CircleShape2D_dny3k")
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=1077321309]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=1715760934]
+shape = SubResource("CircleShape2D_ymbj1")
+debug_color = Color(0.66304994, 0.45059657, 0.6553212, 0.41960785)

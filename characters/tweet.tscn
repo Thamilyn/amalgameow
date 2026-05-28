@@ -4,11 +4,17 @@
 [ext_resource type="Script" uid="uid://cn1xuv8txdj25" path="res://characters/tweet.gd" id="1_noh0o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_noh0o"]
-size = Vector2(120, 68)
+size = Vector2(43, 23)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_noh0o"]
+radius = 28.01785
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jtc3j"]
+radius = 42.0119
 
 [node name="Tweet" type="CharacterBody2D" unique_id=1074880767]
 collision_layer = 4
-collision_mask = 2
+collision_mask = 0
 script = ExtResource("1_noh0o")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=81999568]
@@ -16,5 +22,22 @@ scale = Vector2(0.07, 0.07)
 texture = ExtResource("1_beyyb")
 
 [node name="HurtboxShape" type="CollisionShape2D" parent="." unique_id=1735073382]
-position = Vector2(1, 0)
+position = Vector2(-0.5, -1.5)
 shape = SubResource("RectangleShape2D_noh0o")
+
+[node name="ExplodeArea" type="Area2D" parent="." unique_id=858006095]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExplodeArea" unique_id=857228193]
+shape = SubResource("CircleShape2D_noh0o")
+debug_color = Color(0.8753363, 0.22549629, 0.65423286, 0.41960785)
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=1364923353]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=287671534]
+shape = SubResource("CircleShape2D_jtc3j")
+
+[connection signal="body_entered" from="ExplodeArea" to="." method="_on_explode_area_body_entered"]

@@ -32,7 +32,7 @@ const HITSTOP_DURATION  : float = 0.07   # seconds of time-freeze on hit
 
 # Depth (Y) is clamped so the player stays inside the "stage lane".
 const LANE_TOP    : float = 280.0
-const LANE_BOTTOM : float = 480.0
+const LANE_BOTTOM : float = 730.0
 
 # ── State machine ───────────────────────────────────────────────────────────
 
@@ -247,7 +247,7 @@ func _enter_state(new_state: State) -> void:
 			_play_anim("idle")
 			velocity = Vector2.ZERO
 		State.WALK:
-			_play_anim("walk")
+			_play_anim("run")
 		State.RUN:
 			_play_anim("run")
 		State.JUMP:
@@ -273,7 +273,10 @@ func _enter_state(new_state: State) -> void:
 				_dodge_dir = Vector2(_facing, 0.0)
 			_play_anim("dodge")
 		State.HURT:
-			_play_anim("hurt")
+			if animated_sprite2d:
+				var tw := create_tween()
+				tw.tween_property(animated_sprite2d, "modulate", Color.RED, 0.1)
+				tw.tween_property(animated_sprite2d, "modulate", Color.WHITE, 0.1)
 		State.KNOCKED_DOWN:
 			_play_anim("knocked_down")
 		State.GET_UP:
@@ -338,7 +341,7 @@ func _state_idle(_delta: float) -> void:
 	var h := Input.get_axis("ui_left", "ui_right")
 	var v := Input.get_axis("ui_up",   "ui_down")
 	var moving := Vector2(h, v).length() > 0.1
-	
+
 
 	if _consume_buffered("jump"):
 		_enter_state(State.JUMP)
@@ -416,10 +419,9 @@ func _state_run(delta: float) -> void:
 		_enter_state(State.DODGE)
 		return
 	if _consume_buffered("attack_light"):
-		# Running attack – treat as finisher for variety.
-		_combo_count = MAX_COMBO_HITS
+		_combo_count = 0
 		_combo_timer = COMBO_WINDOW
-		_enter_state(State.ATTACK_FINISHER)
+		_enter_state(State.ATTACK_LIGHT)
 		return
 	if not _is_running:
 		_enter_state(State.WALK)
@@ -585,7 +587,7 @@ func _state_hurt(delta: float) -> void:
 # ── KNOCKED_DOWN ──────────────────────────────────────────────────────────────
 func _state_knocked_down(_delta: float) -> void:
 	velocity = _knockback * 0.5
-	
+
 	if health <= 0:
 		died.emit()
 
@@ -638,8 +640,6 @@ func take_damage(damage: int, knockback_vector: Vector2 = Vector2.ZERO) -> void:
 	health = max(0, health - damage)
 	_knockback = knockback_vector
 	health_changed.emit(health)
-	
-	_play_anim("hurt")
 
 	_hitstop_timer = HITSTOP_DURATION
 

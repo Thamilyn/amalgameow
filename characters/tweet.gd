@@ -30,6 +30,9 @@ enum States {
 # ---------------------------------------------------------------------------
 
 @onready var sprite: Sprite2D = $Sprite2D
+@onready var explode_area : Area2D = $ExplodeArea
+@onready var hurtbox_area : Area2D = $Hurtbox
+
 
 # ---------------------------------------------------------------------------
 # State vars
@@ -107,7 +110,6 @@ func _state_chase() -> void:
 		return
 
 	# Close enough to explode
-	print(dist)
 	if dist <= explosion_range:
 		_enter_state(States.Explode)
 		return
@@ -163,3 +165,7 @@ func take_damage(_damage: int = 1) -> void:
 	if current_state == States.Explode:
 		return
 	_enter_state(States.Explode)
+
+
+func _on_explode_area_body_entered(body: Node2D) -> void:
+	pass # Replace with function body.

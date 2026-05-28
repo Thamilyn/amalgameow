@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://6jlel3cn2pe7" path="res://scenes/main.gd" id="1_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://c1bobapo1vmuo" path="res://characters/player.tscn" id="1_o5qli"]
-[ext_resource type="PackedScene" uid="uid://d1jj72r64jktq" path="res://characters/bat_enemy.tscn" id="2_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://cct8k7884o8fb" path="res://scenes/hp_bar_component.tscn" id="3_sugp2"]
 [ext_resource type="PackedScene" uid="uid://cp47q1wk53geo" path="res://characters/tweet.tscn" id="5_tbgi4"]
+[ext_resource type="Texture2D" uid="uid://54flb63jr3qg" path="res://assets/fondo1.png" id="6_o6xl0"]
 [ext_resource type="AudioStream" uid="uid://btbuh0e2eib17" path="res://assets/music/Glitch Bunny Signal.mp3" id="6_tefeu"]
 
 [sub_resource type="GDScript" id="GDScript_ground_visual"]
@@ -17,53 +17,53 @@ const LANE_TOP     : int = 280
 const LANE_BOTTOM  : int = 480
 const SKY_BOTTOM   : int = 280
 
-func _draw() -> void:
-	# Sky gradient (two-tone)
-	draw_rect(Rect2(0, 0, STAGE_WIDTH, SKY_BOTTOM),          Color(\"#1a1a2e\"))
-	draw_rect(Rect2(0, SKY_BOTTOM - 80, STAGE_WIDTH, 80),    Color(\"#16213e\"))
-
-	# Background buildings (silhouettes)
-	_draw_buildings()
-
-	# Street lane
-	draw_rect(Rect2(0, LANE_TOP, STAGE_WIDTH, LANE_BOTTOM - LANE_TOP), Color(\"#2b2b2b\"))
-
-	# Lane stripe
-	for i in range(0, STAGE_WIDTH, 80):
-		draw_rect(Rect2(i, LANE_TOP + (LANE_BOTTOM - LANE_TOP) / 2 - 2, 40, 4), Color(\"#555555\"))
-
-	# Foreground kerb
-	draw_rect(Rect2(0, LANE_BOTTOM, STAGE_WIDTH, 20), Color(\"#444444\"))
-	draw_rect(Rect2(0, LANE_BOTTOM + 20, STAGE_WIDTH, 200), Color(\"#1a1a1a\"))
-
-func _draw_buildings() -> void:
-	var buildings := [
-		{\"x\": 0,    \"w\": 160, \"h\": 200, \"color\": Color(\"#0f3460\")},
-		{\"x\": 170,  \"w\": 120, \"h\": 150, \"color\": Color(\"#162447\")},
-		{\"x\": 300,  \"w\": 200, \"h\": 240, \"color\": Color(\"#0f3460\")},
-		{\"x\": 510,  \"w\": 140, \"h\": 180, \"color\": Color(\"#1a1a4e\")},
-		{\"x\": 660,  \"w\": 180, \"h\": 220, \"color\": Color(\"#0f3460\")},
-		{\"x\": 850,  \"w\": 130, \"h\": 160, \"color\": Color(\"#162447\")},
-		{\"x\": 990,  \"w\": 210, \"h\": 250, \"color\": Color(\"#0f3460\")},
-		{\"x\": 1210, \"w\": 150, \"h\": 190, \"color\": Color(\"#1a1a4e\")},
-		{\"x\": 1370, \"w\": 170, \"h\": 210, \"color\": Color(\"#0f3460\")},
-		{\"x\": 1550, \"w\": 200, \"h\": 170, \"color\": Color(\"#162447\")},
-		{\"x\": 1760, \"w\": 240, \"h\": 230, \"color\": Color(\"#0f3460\")},
-		{\"x\": 2000, \"w\": 225, \"h\": 175, \"color\": Color(\"#0f3460\")},
-	]
-	for b in buildings:
-		var top : int = SKY_BOTTOM - b[\"h\"]
-		draw_rect(Rect2(b[\"x\"], top, b[\"w\"], b[\"h\"]), b[\"color\"])
-		# Window rows
-		var win_color := Color(\"#f5a623\", 0.6)
-		var win_off_color := Color(\"#333333\", 0.8)
-		for row in range(2, b[\"h\"] / 20):
-			for col in range(1, b[\"w\"] / 18):
-				var lit := (row + col) % 3 != 0
-				draw_rect(
-					Rect2(b[\"x\"] + col * 18 - 10, top + row * 20, 8, 10),
-					win_color if lit else win_off_color
-				)
+#func _draw() -> void:
+	## Sky gradient (two-tone)
+	#draw_rect(Rect2(0, 0, STAGE_WIDTH, SKY_BOTTOM),          Color(\"#1a1a2e\"))
+	#draw_rect(Rect2(0, SKY_BOTTOM - 80, STAGE_WIDTH, 80),    Color(\"#16213e\"))
+#
+	## Background buildings (silhouettes)
+	#_draw_buildings()
+#
+	## Street lane
+	#draw_rect(Rect2(0, LANE_TOP, STAGE_WIDTH, LANE_BOTTOM - LANE_TOP), Color(\"#2b2b2b\"))
+#
+	## Lane stripe
+	#for i in range(0, STAGE_WIDTH, 80):
+		#draw_rect(Rect2(i, LANE_TOP + (LANE_BOTTOM - LANE_TOP) / 2 - 2, 40, 4), Color(\"#555555\"))
+#
+	## Foreground kerb
+	#draw_rect(Rect2(0, LANE_BOTTOM, STAGE_WIDTH, 20), Color(\"#444444\"))
+	#draw_rect(Rect2(0, LANE_BOTTOM + 20, STAGE_WIDTH, 200), Color(\"#1a1a1a\"))
+#
+#func _draw_buildings() -> void:
+	#var buildings := [
+		#{\"x\": 0,    \"w\": 160, \"h\": 200, \"color\": Color(\"#0f3460\")},
+		#{\"x\": 170,  \"w\": 120, \"h\": 150, \"color\": Color(\"#162447\")},
+		#{\"x\": 300,  \"w\": 200, \"h\": 240, \"color\": Color(\"#0f3460\")},
+		#{\"x\": 510,  \"w\": 140, \"h\": 180, \"color\": Color(\"#1a1a4e\")},
+		#{\"x\": 660,  \"w\": 180, \"h\": 220, \"color\": Color(\"#0f3460\")},
+		#{\"x\": 850,  \"w\": 130, \"h\": 160, \"color\": Color(\"#162447\")},
+		#{\"x\": 990,  \"w\": 210, \"h\": 250, \"color\": Color(\"#0f3460\")},
+		#{\"x\": 1210, \"w\": 150, \"h\": 190, \"color\": Color(\"#1a1a4e\")},
+		#{\"x\": 1370, \"w\": 170, \"h\": 210, \"color\": Color(\"#0f3460\")},
+		#{\"x\": 1550, \"w\": 200, \"h\": 170, \"color\": Color(\"#162447\")},
+		#{\"x\": 1760, \"w\": 240, \"h\": 230, \"color\": Color(\"#0f3460\")},
+		#{\"x\": 2000, \"w\": 225, \"h\": 175, \"color\": Color(\"#0f3460\")},
+	#]
+	#for b in buildings:
+		#var top : int = SKY_BOTTOM - b[\"h\"]
+		#draw_rect(Rect2(b[\"x\"], top, b[\"w\"], b[\"h\"]), b[\"color\"])
+		## Window rows
+		#var win_color := Color(\"#f5a623\", 0.6)
+		#var win_off_color := Color(\"#333333\", 0.8)
+		#for row in range(2, b[\"h\"] / 20):
+			#for col in range(1, b[\"w\"] / 18):
+				#var lit := (row + col) % 3 != 0
+				#draw_rect(
+					#Rect2(b[\"x\"] + col * 18 - 10, top + row * 20, 8, 10),
+					#win_color if lit else win_off_color
+				#)
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
@@ -104,43 +104,51 @@ func _physics_process(delta: float) -> void:
 [node name="Main" type="Node2D" unique_id=126025830 node_paths=PackedStringArray("player")]
 script = ExtResource("1_jyhfs")
 player = NodePath("Player")
+metadata/_edit_horizontal_guides_ = [737.0]
+metadata/_edit_vertical_guides_ = [1947.0]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=496588059]
+position = Vector2(976, 400)
+texture = ExtResource("6_o6xl0")
 
 [node name="StageVisual" type="Node2D" parent="." unique_id=2072822378]
 position = Vector2(-1, 0)
 script = SubResource("GDScript_ground_visual")
 
 [node name="Ground" type="StaticBody2D" parent="." unique_id=980597417]
-position = Vector2(1000, 496)
+position = Vector2(1237, 709)
 
 [node name="GroundCollision" type="CollisionShape2D" parent="Ground" unique_id=741470483]
-position = Vector2(228.5, 0)
+shape = SubResource("RectangleShape2D_ground")
+
+[node name="Roof" type="StaticBody2D" parent="." unique_id=873124752]
+position = Vector2(1230, 438)
+
+[node name="GroundCollision" type="CollisionShape2D" parent="Roof" unique_id=1346422976]
 shape = SubResource("RectangleShape2D_ground")
 
 [node name="WallLeft" type="StaticBody2D" parent="." unique_id=1462732293]
 position = Vector2(-16, 380)
 
 [node name="WallLeftCollision" type="CollisionShape2D" parent="WallLeft" unique_id=1743052349]
+position = Vector2(-2, 98)
 shape = SubResource("RectangleShape2D_wall_left")
 
 [node name="WallRight" type="StaticBody2D" parent="." unique_id=199463818]
-position = Vector2(2477, 334)
+position = Vector2(1966, 532)
 
 [node name="WallRightCollision" type="CollisionShape2D" parent="WallRight" unique_id=1852195380]
 shape = SubResource("RectangleShape2D_wall_right")
 
 [node name="Player" parent="." unique_id=1586832474 instance=ExtResource("1_o5qli")]
-position = Vector2(300, 380)
+position = Vector2(80, 614)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1730046645 node_paths=PackedStringArray("target")]
-position = Vector2(640, 360)
-zoom = Vector2(1.25, 1.25)
+position = Vector2(466, 453)
 script = SubResource("GDScript_camera")
 target = NodePath("../Player")
-bound_right = 2500.0
-
-[node name="BatEnemy" parent="." unique_id=486108783 instance=ExtResource("2_0wfyh")]
-position = Vector2(1007.43134, 353.0159)
-attack_damage = 50.0
+bound_left = 5.0
+bound_right = 1950.0
 
 [node name="UILayer" type="CanvasLayer" parent="." unique_id=430399700]
 
@@ -149,13 +157,64 @@ player = NodePath("../../Player")
 
 [node name="Checkpoint" type="Node2D" parent="." unique_id=958765652]
 
-[node name="Tweet" parent="." unique_id=1074880767 instance=ExtResource("5_tbgi4")]
-position = Vector2(837, 281)
-chase_speed = 120.0
-detection_range = 200.0
-explosion_range = 65.0
-
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="." unique_id=2143307848]
 stream = ExtResource("6_tefeu")
+volume_db = -28.468
 autoplay = true
 parameters/looping = true
+
+[node name="EnemiesStageOne" type="Node2D" parent="." unique_id=1660092733]
+
+[node name="Tweet" parent="EnemiesStageOne" unique_id=1074880767 instance=ExtResource("5_tbgi4")]
+position = Vector2(986, 564)
+chase_speed = 120.0
+detection_range = 200.0
+explosion_range = 55.0
+
+[node name="Tweet5" parent="EnemiesStageOne" unique_id=392828955 instance=ExtResource("5_tbgi4")]
+position = Vector2(1601, 658)
+chase_speed = 120.0
+detection_range = 200.0
+explosion_range = 55.0
+
+[node name="Tweet6" parent="EnemiesStageOne" unique_id=1772077719 instance=ExtResource("5_tbgi4")]
+position = Vector2(1790, 520)
+chase_speed = 120.0
+detection_range = 200.0
+explosion_range = 55.0
+
+[node name="Tweet7" parent="EnemiesStageOne" unique_id=126985645 instance=ExtResource("5_tbgi4")]
+position = Vector2(786, 643)
+chase_speed = 120.0
+detection_range = 200.0
+explosion_range = 55.0
+
+[node name="Tweet8" parent="EnemiesStageOne" unique_id=2067041169 instance=ExtResource("5_tbgi4")]
+position = Vector2(739, 490)
+chase_speed = 120.0
+detection_range = 200.0
+explosion_range = 55.0
+
+[node name="Tweet9" parent="EnemiesStageOne" unique_id=97532923 instance=ExtResource("5_tbgi4")]
+position = Vector2(473, 581)
+chase_speed = 120.0
+detection_range = 200.0
+explosion_range = 55.0
+
+[node name="Tweet2" parent="EnemiesStageOne" unique_id=127295570 instance=ExtResource("5_tbgi4")]
+position = Vector2(1366, 550)
+chase_speed = 120.0
+detection_range = 200.0
+explosion_range = 55.0
+
+[node name="Tweet3" parent="EnemiesStageOne" unique_id=903552553 instance=ExtResource("5_tbgi4")]
+position = Vector2(1182, 701)
+chase_speed = 120.0
+detection_range = 200.0
+explosion_range = 55.0
+
+[node name="Tweet4" parent="EnemiesStageOne" unique_id=923508358 instance=ExtResource("5_tbgi4")]
+position = Vector2(1182, 466)
+chase_speed = 120.0
+detection_range = 200.0
+explosion_range = 55.0
