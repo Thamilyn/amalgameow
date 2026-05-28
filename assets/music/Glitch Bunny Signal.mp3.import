@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://btbuh0e2eib17"
+path="res://.godot/imported/Glitch Bunny Signal.mp3-49ced0063fe4eb52f4c6d86094a9c3a2.mp3str"
+
+[deps]
+
+source_file="res://assets/music/Glitch Bunny Signal.mp3"
+dest_files=["res://.godot/imported/Glitch Bunny Signal.mp3-49ced0063fe4eb52f4c6d86094a9c3a2.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

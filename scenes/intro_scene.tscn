@@ -1,0 +1,90 @@
+[gd_scene format=3 uid="uid://canw3fud5fwa3"]
+
+[ext_resource type="Texture2D" uid="uid://dgj6giooyfmn6" path="res://assets/intro_scenes/panel1.png" id="1_jkhwn"]
+[ext_resource type="Texture2D" uid="uid://cnols21g46vo6" path="res://assets/intro_scenes/panel2.png" id="2_tij55"]
+[ext_resource type="Texture2D" uid="uid://kdbegfev7vbx" path="res://assets/intro_scenes/panel3.png" id="3_8wqor"]
+[ext_resource type="Texture2D" uid="uid://djl4gt8naa0xr" path="res://assets/intro_scenes/panel4.png" id="4_0f06d"]
+
+[sub_resource type="Animation" id="Animation_01j2m"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PanelComic:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_jkhwn")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Fade:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_f164h"]
+resource_name = "intro"
+length = 18.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PanelComic:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(2.1666667, 6.2666664, 10.233334, 14.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("1_jkhwn"), ExtResource("2_tij55"), ExtResource("3_8wqor"), ExtResource("4_0f06d")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Fade:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.7971292, 15.974481, 17.686033),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0), Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_t82ha"]
+_data = {
+&"RESET": SubResource("Animation_01j2m"),
+&"intro": SubResource("Animation_f164h")
+}
+
+[node name="IntroScene" type="CanvasLayer" unique_id=515240239]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=3422106]
+libraries/ = SubResource("AnimationLibrary_t82ha")
+autoplay = &"intro"
+
+[node name="PanelComic" type="TextureRect" parent="." unique_id=1817342258]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_jkhwn")
+expand_mode = 2
+
+[node name="Fade" type="ColorRect" parent="." unique_id=248464170]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)

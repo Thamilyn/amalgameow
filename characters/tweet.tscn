@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://cp47q1wk53geo"]
+
+[ext_resource type="Texture2D" uid="uid://cm50sck61x82n" path="res://assets/Twit.png" id="1_beyyb"]
+[ext_resource type="Script" uid="uid://cn1xuv8txdj25" path="res://characters/tweet.gd" id="1_noh0o"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_noh0o"]
+size = Vector2(120, 68)
+
+[node name="Tweet" type="CharacterBody2D" unique_id=1074880767]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_noh0o")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=81999568]
+scale = Vector2(0.07, 0.07)
+texture = ExtResource("1_beyyb")
+
+[node name="HurtboxShape" type="CollisionShape2D" parent="." unique_id=1735073382]
+position = Vector2(1, 0)
+shape = SubResource("RectangleShape2D_noh0o")
