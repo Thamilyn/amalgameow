@@ -50,7 +50,7 @@ offset_bottom = 169.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("4_kdmts")
-text = "Start"
+text = "Play"
 
 [node name="Label" type="Label" parent="Menu" unique_id=210865478]
 anchors_preset = 8
@@ -66,7 +66,8 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("4_kdmts")
 theme_override_font_sizes/font_size = 64
-text = "Amalgameow"
+text = "The Feed"
+horizontal_alignment = 1
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=344578246]
 stream = ExtResource("5_0auqf")

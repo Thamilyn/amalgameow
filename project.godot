@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Amalgameow"
+config/name="TheFeed"
 run/main_scene="uid://debypmvha5dxy"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
