@@ -169,57 +169,55 @@ parameters/looping = true
 position = Vector2(1889, 501)
 next_scene = ExtResource("7_tipki")
 
-[node name="EnemiesStageOne" type="Node2D" parent="." unique_id=1660092733]
-
-[node name="Tweet" parent="EnemiesStageOne" unique_id=1074880767 instance=ExtResource("5_tbgi4")]
+[node name="Tweet" parent="." unique_id=1074880767 instance=ExtResource("5_tbgi4")]
 position = Vector2(986, 564)
 chase_speed = 120.0
 detection_range = 200.0
 explosion_range = 55.0
 
-[node name="Tweet5" parent="EnemiesStageOne" unique_id=392828955 instance=ExtResource("5_tbgi4")]
+[node name="Tweet5" parent="." unique_id=392828955 instance=ExtResource("5_tbgi4")]
 position = Vector2(1601, 658)
 chase_speed = 120.0
 detection_range = 200.0
 explosion_range = 55.0
 
-[node name="Tweet6" parent="EnemiesStageOne" unique_id=1772077719 instance=ExtResource("5_tbgi4")]
+[node name="Tweet6" parent="." unique_id=1772077719 instance=ExtResource("5_tbgi4")]
 position = Vector2(1536, 487)
 chase_speed = 120.0
 detection_range = 200.0
 explosion_range = 55.0
 
-[node name="Tweet7" parent="EnemiesStageOne" unique_id=126985645 instance=ExtResource("5_tbgi4")]
+[node name="Tweet7" parent="." unique_id=126985645 instance=ExtResource("5_tbgi4")]
 position = Vector2(786, 643)
 chase_speed = 120.0
 detection_range = 200.0
 explosion_range = 55.0
 
-[node name="Tweet8" parent="EnemiesStageOne" unique_id=2067041169 instance=ExtResource("5_tbgi4")]
+[node name="Tweet8" parent="." unique_id=2067041169 instance=ExtResource("5_tbgi4")]
 position = Vector2(739, 490)
 chase_speed = 120.0
 detection_range = 200.0
 explosion_range = 55.0
 
-[node name="Tweet9" parent="EnemiesStageOne" unique_id=97532923 instance=ExtResource("5_tbgi4")]
+[node name="Tweet9" parent="." unique_id=97532923 instance=ExtResource("5_tbgi4")]
 position = Vector2(473, 581)
 chase_speed = 120.0
 detection_range = 200.0
 explosion_range = 55.0
 
-[node name="Tweet2" parent="EnemiesStageOne" unique_id=127295570 instance=ExtResource("5_tbgi4")]
+[node name="Tweet2" parent="." unique_id=127295570 instance=ExtResource("5_tbgi4")]
 position = Vector2(1366, 550)
 chase_speed = 120.0
 detection_range = 200.0
 explosion_range = 55.0
 
-[node name="Tweet3" parent="EnemiesStageOne" unique_id=903552553 instance=ExtResource("5_tbgi4")]
+[node name="Tweet3" parent="." unique_id=903552553 instance=ExtResource("5_tbgi4")]
 position = Vector2(1182, 701)
 chase_speed = 120.0
 detection_range = 200.0
 explosion_range = 55.0
 
-[node name="Tweet4" parent="EnemiesStageOne" unique_id=923508358 instance=ExtResource("5_tbgi4")]
+[node name="Tweet4" parent="." unique_id=923508358 instance=ExtResource("5_tbgi4")]
 position = Vector2(1182, 466)
 chase_speed = 120.0
 detection_range = 200.0

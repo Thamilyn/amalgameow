@@ -27,10 +27,15 @@ texture = ExtResource("1_kdgpo")
 [node name="HPBarComponent" parent="UILayer" unique_id=710309823 node_paths=PackedStringArray("player") instance=ExtResource("2_7okkn")]
 player = NodePath("../../Player")
 
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="UILayer" unique_id=864462199]
+offset_right = 40.0
+offset_bottom = 40.0
+
 [node name="Camera2D" type="Camera2D" parent="." unique_id=2128874546 node_paths=PackedStringArray("target")]
 position = Vector2(566, 333)
 script = ExtResource("3_84w8w")
 target = NodePath("../Player")
+bound_left = 6.0
 bound_right = 1980.0
 
 [node name="Player" parent="." unique_id=1253208062 instance=ExtResource("4_6wr5o")]

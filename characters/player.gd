@@ -85,6 +85,7 @@ var _combo_timer    : float = 0.0
 var _dodge_timer    : float = 0.0
 var _dodge_dir      : Vector2 = Vector2.ZERO
 var _is_invincible  : bool  = false
+var _dodge_tween    : Tween  = null
 
 # Hitstop
 var _hitstop_timer  : float = 0.0
@@ -250,6 +251,8 @@ func _enter_state(new_state: State) -> void:
 			_air_attack_used = false
 			_play_anim("idle")
 			velocity = Vector2.ZERO
+			if animated_sprite2d:
+				animated_sprite2d.rotation = 0.0
 		State.WALK:
 			_play_anim("run")
 		State.RUN:
@@ -275,7 +278,13 @@ func _enter_state(new_state: State) -> void:
 			_dodge_dir = Vector2(h, v).normalized()
 			if _dodge_dir == Vector2.ZERO:
 				_dodge_dir = Vector2(_facing, 0.0)
-			_play_anim("dodge")
+			if animated_sprite2d:
+				if _dodge_tween:
+					_dodge_tween.kill()
+				animated_sprite2d.rotation = 0.0
+				_dodge_tween = create_tween()
+				_dodge_tween.tween_property(animated_sprite2d, "rotation", TAU, DODGE_DURATION)
+				_dodge_tween.tween_callback(func(): animated_sprite2d.rotation = 0.0)
 		State.HURT:
 			if animated_sprite2d:
 				var tw := create_tween()
@@ -295,8 +304,8 @@ const ANIM_MAP : Dictionary = {
 	"jump":             "jump",
 	"attack_light_1":   "punch_jab",
 	"attack_light_2":   "punch_jab",
-	"attack_light_3":   "punch_cross",
-	"attack_finisher":  "punch",
+	"attack_light_3":   "punch_jab",
+	"attack_finisher":  "punch_jab",
 	"attack_air":       "air_spin",
 	"dodge":            "roll",
 	"hurt":             "hurt",
@@ -474,8 +483,10 @@ func _state_attack_light(delta: float) -> void:
 	# Animation-driven: assume each attack anim lasts ~0.35 s.
 	var attack_duration := 0.35
 
-	# Mid-swing hitbox activation (at ~40% of duration).
-	if not _attack_hit and _state_timer >= attack_duration * 0.4:
+	# punch_jab (combo hits 1 & 2) activates immediately; punch_cross keeps a short delay.
+	#var hitbox_delay := 0.0 if _combo_count < 2 else attack_duration * 0.4
+	var hitbox_delay := 0.0
+	if not _attack_hit and _state_timer >= hitbox_delay:
 		_activate_hitbox(12)
 
 	# Buffer the next attack input during this swing.
@@ -628,8 +639,8 @@ func _activate_hitbox(damage: int) -> void:
 		# Enable for one physics frame.
 		hitbox.monitoring = true
 		_deflect_bullets_in_range()
-		await get_tree().physics_frame
-		hitbox.monitoring = false
+		#await get_tree().physics_frame
+		#hitbox.monitoring = false
 
 	# Emit so the game can react even without an Area2D.
 	attack_landed.emit(damage, global_position)
@@ -687,7 +698,6 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
-	print(body)
 	body.take_damage(hitbox.get_meta('damage', 10))
 
 func reset_state() -> void:
@@ -695,3 +705,8 @@ func reset_state() -> void:
 	health_changed.emit(health)
 	state = State.IDLE
 	_play_anim("idle")
+
+
+func _on_animated_sprite_2d_animation_finished() -> void:
+	if hitbox.monitoring:
+		hitbox.monitoring = false

@@ -5,7 +5,6 @@
 [ext_resource type="Texture2D" uid="uid://cvoupaxijwv8b" path="res://assets/cat_death/1.png" id="3_hsn1j"]
 [ext_resource type="Texture2D" uid="uid://xjihrmo6e34x" path="res://assets/cat_death/2.png" id="4_dx8gg"]
 [ext_resource type="Texture2D" uid="uid://e85j6ig3eq8c" path="res://assets/2D-Pixel-Art-Character-Template/2D-Pixel-Art-Character-Template/Punch Cross/Player Punch Cross 64x64.png" id="5_6t23p"]
-[ext_resource type="Texture2D" uid="uid://dyvtpkios43y1" path="res://assets/idle_organicpngfinal.png" id="5_eus45"]
 [ext_resource type="Texture2D" uid="uid://12416j2wxxt8" path="res://assets/cat_death/3.png" id="5_qp1es"]
 [ext_resource type="Texture2D" uid="uid://c0cqe1wkgncg3" path="res://assets/2D-Pixel-Art-Character-Template/2D-Pixel-Art-Character-Template/Punch/Player Punch 64x64.png" id="6_eho78"]
 [ext_resource type="Texture2D" uid="uid://djxj1w1pyrpxs" path="res://assets/cat_death/4.png" id="6_qk7w8"]
@@ -13,10 +12,13 @@
 [ext_resource type="Texture2D" uid="uid://6u7qtppnnha0" path="res://assets/2D-Pixel-Art-Character-Template/2D-Pixel-Art-Character-Template/Land/player land 48x48.png" id="7_6rrl0"]
 [ext_resource type="Texture2D" uid="uid://dkc80i3u1adfv" path="res://assets/cata_jump/1.png" id="7_ke0a4"]
 [ext_resource type="Texture2D" uid="uid://dxqi5uru6bug8" path="res://assets/cata_jump/2.png" id="8_41yun"]
+[ext_resource type="Texture2D" uid="uid://4c4sbjcqcled" path="res://assets/cat_idle/1.png" id="8_qp1es"]
+[ext_resource type="Texture2D" uid="uid://37kumdfvhtjr" path="res://assets/cat_idle/2.png" id="9_qk7w8"]
 [ext_resource type="Texture2D" uid="uid://m208yk3bhnll" path="res://assets/cata_jump/3.png" id="9_svrv0"]
+[ext_resource type="Texture2D" uid="uid://co5yipmimli6h" path="res://assets/cat_idle/3.png" id="10_3t8uj"]
 [ext_resource type="Texture2D" uid="uid://dy4n2mobdgdf6" path="res://assets/cata_jump/4.png" id="10_4rspn"]
-[ext_resource type="Texture2D" uid="uid://dokbeoamwykbk" path="res://assets/2D-Pixel-Art-Character-Template/2D-Pixel-Art-Character-Template/Roll/Player Roll 48x48.png" id="10_8sqrr"]
 [ext_resource type="Texture2D" uid="uid://n14ow3uxuqox" path="res://assets/cata_punch/1.png" id="11_h076o"]
+[ext_resource type="Texture2D" uid="uid://ch6kh2w1u4a7x" path="res://assets/cat_idle/4.png" id="11_rjhu2"]
 [ext_resource type="Texture2D" uid="uid://ctc6k6vpwntf6" path="res://assets/cata_punch/2.png" id="12_lcfw7"]
 [ext_resource type="Texture2D" uid="uid://b0skhgsl0g0vc" path="res://assets/cata_punch/3.png" id="13_b0vde"]
 [ext_resource type="Texture2D" uid="uid://ycufyspo1vbt" path="res://assets/cata_run/1.png" id="17_svrv0"]
@@ -422,10 +424,6 @@ region = Rect2(192, 0, 48, 48)
 atlas = ExtResource("3_eho78")
 region = Rect2(240, 0, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_svrv0"]
-atlas = ExtResource("5_eus45")
-region = Rect2(25, 0, 743, 885)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_x26ri"]
 atlas = ExtResource("7_6rrl0")
 region = Rect2(0, 0, 48, 48)
@@ -522,34 +520,6 @@ region = Rect2(320, 0, 64, 64)
 atlas = ExtResource("5_6t23p")
 region = Rect2(384, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_3wgix"]
-atlas = ExtResource("10_8sqrr")
-region = Rect2(0, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_omdml"]
-atlas = ExtResource("10_8sqrr")
-region = Rect2(48, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vxgp5"]
-atlas = ExtResource("10_8sqrr")
-region = Rect2(96, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_eifc4"]
-atlas = ExtResource("10_8sqrr")
-region = Rect2(144, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4yp0h"]
-atlas = ExtResource("10_8sqrr")
-region = Rect2(192, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vcw5v"]
-atlas = ExtResource("10_8sqrr")
-region = Rect2(240, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_at6nc"]
-atlas = ExtResource("10_8sqrr")
-region = Rect2(288, 0, 48, 48)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_eus45"]
 animations = [{
 "frames": [{
@@ -597,7 +567,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_svrv0")
+"texture": ExtResource("8_qp1es")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_qk7w8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_3t8uj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_rjhu2")
 }],
 "loop": true,
 "name": &"idle",
@@ -719,30 +698,9 @@ animations = [{
 }],
 "loop": false,
 "name": &"punch_jab",
-"speed": 6.0
+"speed": 10.0
 }, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3wgix")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_omdml")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vxgp5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_eifc4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4yp0h")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vcw5v")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_at6nc")
-}],
+"frames": [],
 "loop": false,
 "name": &"roll",
 "speed": 10.0
@@ -825,3 +783,4 @@ animation = &"idle"
 autoplay = "idle"
 
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
