@@ -9,8 +9,12 @@ radius = 39.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_ymbj1"]
 radius = 157.02866
 
-[node name="TagEnemy" type="CharacterBody2D" unique_id=608095612]
+[node name="TagEnemy" type="CharacterBody2D" unique_id=608095612 groups=["enemies"]]
+collision_layer = 4
+collision_mask = 2
 script = ExtResource("1_dny3k")
+max_hp = 20
+shoot_cooldown = 2.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=72696699]
 scale = Vector2(0.1, 0.1)

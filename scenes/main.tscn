@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://cp47q1wk53geo" path="res://characters/tweet.tscn" id="5_tbgi4"]
 [ext_resource type="Texture2D" uid="uid://54flb63jr3qg" path="res://assets/fondo1.png" id="6_o6xl0"]
 [ext_resource type="AudioStream" uid="uid://btbuh0e2eib17" path="res://assets/music/Glitch Bunny Signal.mp3" id="6_tefeu"]
+[ext_resource type="PackedScene" uid="uid://crdq7d6tvmag2" path="res://characters/portal.tscn" id="6_tipki"]
+[ext_resource type="PackedScene" uid="uid://b2vq7xdhf7kis" path="res://scenes/alley.tscn" id="7_tipki"]
 
 [sub_resource type="GDScript" id="GDScript_ground_visual"]
 script/source = "extends Node2D
@@ -163,6 +165,10 @@ volume_db = -28.468
 autoplay = true
 parameters/looping = true
 
+[node name="Portal" parent="." unique_id=1934571563 instance=ExtResource("6_tipki")]
+position = Vector2(1889, 501)
+next_scene = ExtResource("7_tipki")
+
 [node name="EnemiesStageOne" type="Node2D" parent="." unique_id=1660092733]
 
 [node name="Tweet" parent="EnemiesStageOne" unique_id=1074880767 instance=ExtResource("5_tbgi4")]
@@ -178,7 +184,7 @@ detection_range = 200.0
 explosion_range = 55.0
 
 [node name="Tweet6" parent="EnemiesStageOne" unique_id=1772077719 instance=ExtResource("5_tbgi4")]
-position = Vector2(1790, 520)
+position = Vector2(1536, 487)
 chase_speed = 120.0
 detection_range = 200.0
 explosion_range = 55.0

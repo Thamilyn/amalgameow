@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dlpcjms4mfd64"]
 
 [ext_resource type="Script" uid="uid://ca7h4xhrangig" path="res://scenes/game_over_ui.gd" id="1_ovv0w"]
+[ext_resource type="Theme" uid="uid://d2118ompx6rdc" path="res://new_theme.tres" id="2_y6ord"]
 
 [node name="GameOverUI" type="Panel" unique_id=1891193993]
 anchors_preset = 15
@@ -23,6 +24,7 @@ offset_right = 87.0
 offset_bottom = 14.5
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_y6ord")
 theme_override_font_sizes/font_size = 32
 text = "Game Over"
 
@@ -39,6 +41,25 @@ offset_right = 40.5
 offset_bottom = 63.5
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_y6ord")
 text = "Try Again"
 
+[node name="QuitButton" type="Button" parent="." unique_id=104102036]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = 84.0
+offset_right = 26.0
+offset_bottom = 115.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_y6ord")
+text = "Quit
+"
+
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="QuitButton" to="." method="_on_quit_button_pressed"]

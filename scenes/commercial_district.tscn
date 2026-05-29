@@ -1,0 +1,96 @@
+[gd_scene format=3 uid="uid://byngaqq2671a4"]
+
+[ext_resource type="Texture2D" uid="uid://et8xo5gqppn7" path="res://assets/backgrounds/comercial_district.png" id="1_ae3ti"]
+[ext_resource type="Script" uid="uid://6jlel3cn2pe7" path="res://scenes/main.gd" id="1_j1ia5"]
+[ext_resource type="PackedScene" uid="uid://cct8k7884o8fb" path="res://scenes/hp_bar_component.tscn" id="2_j1ia5"]
+[ext_resource type="Script" uid="uid://dp2kgrsjehbde" path="res://scenes/camera_2d.gd" id="3_elqjt"]
+[ext_resource type="PackedScene" uid="uid://c1bobapo1vmuo" path="res://characters/player.tscn" id="4_oaoni"]
+[ext_resource type="PackedScene" uid="uid://cp47q1wk53geo" path="res://characters/tweet.tscn" id="6_oaoni"]
+[ext_resource type="PackedScene" uid="uid://cvkr2a2metxnj" path="res://characters/tag_enemy.tscn" id="7_tak7d"]
+[ext_resource type="PackedScene" uid="uid://crdq7d6tvmag2" path="res://characters/portal.tscn" id="8_tak7d"]
+[ext_resource type="PackedScene" uid="uid://5b5jnm6qvrge" path="res://scenes/boss_arena.tscn" id="9_lniwt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ae3ti"]
+size = Vector2(2457, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j1ia5"]
+size = Vector2(32, 400)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_elqjt"]
+size = Vector2(32, 400)
+
+[node name="CommercialDistrict" type="Node2D" unique_id=184680007 node_paths=PackedStringArray("player")]
+script = ExtResource("1_j1ia5")
+player = NodePath("Player")
+
+[node name="AlleyBg" type="Sprite2D" parent="." unique_id=2112366460]
+position = Vector2(991, 398)
+texture = ExtResource("1_ae3ti")
+
+[node name="UILayer" type="CanvasLayer" parent="." unique_id=2040399902]
+
+[node name="HPBarComponent" parent="UILayer" unique_id=710309823 node_paths=PackedStringArray("player") instance=ExtResource("2_j1ia5")]
+player = NodePath("../../Player")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=542525321 node_paths=PackedStringArray("target")]
+position = Vector2(566, 333)
+script = ExtResource("3_elqjt")
+target = NodePath("../Player")
+bound_right = 1980.0
+
+[node name="Player" parent="." unique_id=1253208062 instance=ExtResource("4_oaoni")]
+position = Vector2(80, 614)
+
+[node name="Ground" type="StaticBody2D" parent="." unique_id=880265192]
+position = Vector2(1231, 682)
+
+[node name="GroundCollision" type="CollisionShape2D" parent="Ground" unique_id=1784038504]
+shape = SubResource("RectangleShape2D_ae3ti")
+
+[node name="Roof" type="StaticBody2D" parent="." unique_id=67149735]
+position = Vector2(1227, 496)
+
+[node name="GroundCollision" type="CollisionShape2D" parent="Roof" unique_id=1316856374]
+position = Vector2(-6, -136)
+shape = SubResource("RectangleShape2D_ae3ti")
+
+[node name="WallLeft" type="StaticBody2D" parent="." unique_id=244031982]
+position = Vector2(-16, 380)
+
+[node name="WallLeftCollision" type="CollisionShape2D" parent="WallLeft" unique_id=825889594]
+position = Vector2(-2, 98)
+shape = SubResource("RectangleShape2D_j1ia5")
+
+[node name="WallRight" type="StaticBody2D" parent="." unique_id=1803413250]
+position = Vector2(1966, 532)
+
+[node name="WallRightCollision" type="CollisionShape2D" parent="WallRight" unique_id=2004796286]
+shape = SubResource("RectangleShape2D_elqjt")
+
+[node name="Tweet" parent="." unique_id=1074880767 instance=ExtResource("6_oaoni")]
+position = Vector2(650.51526, 467.92023)
+
+[node name="Tweet2" parent="." unique_id=817257978 instance=ExtResource("6_oaoni")]
+position = Vector2(656, 614)
+
+[node name="Tweet3" parent="." unique_id=1254517444 instance=ExtResource("6_oaoni")]
+position = Vector2(788, 410)
+
+[node name="TagEnemy" parent="." unique_id=608095612 instance=ExtResource("7_tak7d")]
+position = Vector2(1041.5059, 507.36224)
+
+[node name="TagEnemy2" parent="." unique_id=1097007253 instance=ExtResource("7_tak7d")]
+position = Vector2(870, 615)
+
+[node name="TagEnemy3" parent="." unique_id=1652393675 instance=ExtResource("7_tak7d")]
+position = Vector2(1311, 600)
+
+[node name="TagEnemy4" parent="." unique_id=624605271 instance=ExtResource("7_tak7d")]
+position = Vector2(1627, 466)
+
+[node name="TagEnemy5" parent="." unique_id=846134074 instance=ExtResource("7_tak7d")]
+position = Vector2(523, 442)
+
+[node name="Portal" parent="." unique_id=1934571563 instance=ExtResource("8_tak7d")]
+position = Vector2(1778, 465)
+next_scene = ExtResource("9_lniwt")

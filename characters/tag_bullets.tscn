@@ -1,6 +1,21 @@
 [gd_scene format=3 uid="uid://fu7yxihukvo8"]
 
+[ext_resource type="Script" uid="uid://bhnrpw5tfl1ni" path="res://characters/tag_bullets.gd" id="1_3u8fy"]
 [ext_resource type="Texture2D" uid="uid://bhj1tdclm78gt" path="res://assets/tag_bullet.png" id="1_fwmc4"]
+[ext_resource type="Shader" uid="uid://bu1mxogdanv0m" path="res://assets/shaders/glow_colorrect.gdshader" id="3_btxta"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j2608"]
+shader = ExtResource("3_btxta")
+shader_parameter/rect_size = Vector2(0.1, 0.1)
+shader_parameter/bness = 1.0
+shader_parameter/fall_off_scale = 3.0
+shader_parameter/b_offset = 0.0
+
+[sub_resource type="Gradient" id="Gradient_m2cyo"]
+colors = PackedColorArray(0.6806433, 0.16358134, 0.35411382, 1, 0.62839186, 0.25409952, 0.4404081, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_uud0v"]
+gradient = SubResource("Gradient_m2cyo")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3u8fy"]
 radius = 25.019993
@@ -8,10 +23,29 @@ radius = 25.019993
 [node name="TagBullets" type="Area2D" unique_id=175673320]
 collision_layer = 0
 collision_mask = 2
+script = ExtResource("1_3u8fy")
+bullet_damage = 10.0
+speed = 400.0
+knockback_force = 100.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1090434970]
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("1_fwmc4")
 
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=1813474134]
+material = SubResource("ShaderMaterial_j2608")
+position = Vector2(0.50000036, 1.6987324e-06)
+scale = Vector2(0.82812506, 0.84375006)
+texture = SubResource("GradientTexture2D_uud0v")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1177854338]
+visible = false
 shape = SubResource("CircleShape2D_3u8fy")
+
+[node name="Timer" type="Timer" parent="." unique_id=348166266]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

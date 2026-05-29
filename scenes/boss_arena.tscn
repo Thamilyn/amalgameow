@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://5b5jnm6qvrge"]
+
+[ext_resource type="Script" uid="uid://6jlel3cn2pe7" path="res://scenes/main.gd" id="1_7okkn"]
+[ext_resource type="Texture2D" uid="uid://dk53q61g00u8o" path="res://assets/backgrounds/BossArena.png" id="1_kdgpo"]
+[ext_resource type="PackedScene" uid="uid://cct8k7884o8fb" path="res://scenes/hp_bar_component.tscn" id="2_7okkn"]
+[ext_resource type="Script" uid="uid://dp2kgrsjehbde" path="res://scenes/camera_2d.gd" id="3_84w8w"]
+[ext_resource type="PackedScene" uid="uid://c1bobapo1vmuo" path="res://characters/player.tscn" id="4_6wr5o"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7okkn"]
+size = Vector2(2457, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_84w8w"]
+size = Vector2(32, 741)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6wr5o"]
+size = Vector2(32, 744)
+
+[node name="BossArena" type="Node2D" unique_id=34756096]
+script = ExtResource("1_7okkn")
+
+[node name="AlleyBg" type="Sprite2D" parent="." unique_id=2075912620]
+position = Vector2(991, 398)
+texture = ExtResource("1_kdgpo")
+
+[node name="UILayer" type="CanvasLayer" parent="." unique_id=2084964807]
+
+[node name="HPBarComponent" parent="UILayer" unique_id=710309823 node_paths=PackedStringArray("player") instance=ExtResource("2_7okkn")]
+player = NodePath("../../Player")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2128874546 node_paths=PackedStringArray("target")]
+position = Vector2(566, 333)
+script = ExtResource("3_84w8w")
+target = NodePath("../Player")
+bound_right = 1980.0
+
+[node name="Player" parent="." unique_id=1253208062 instance=ExtResource("4_6wr5o")]
+position = Vector2(80, 614)
+
+[node name="Ground" type="StaticBody2D" parent="." unique_id=1651351883]
+position = Vector2(1202, 761)
+
+[node name="GroundCollision" type="CollisionShape2D" parent="Ground" unique_id=446895163]
+shape = SubResource("RectangleShape2D_7okkn")
+
+[node name="Roof" type="StaticBody2D" parent="." unique_id=1074105659]
+position = Vector2(1202, 118)
+
+[node name="GroundCollision" type="CollisionShape2D" parent="Roof" unique_id=1312583213]
+position = Vector2(-6, -136)
+shape = SubResource("RectangleShape2D_7okkn")
+
+[node name="WallLeft" type="StaticBody2D" parent="." unique_id=1090561997]
+position = Vector2(-2, 437)
+
+[node name="WallLeftCollision" type="CollisionShape2D" parent="WallLeft" unique_id=1031008480]
+position = Vector2(-2, -72.5)
+shape = SubResource("RectangleShape2D_84w8w")
+
+[node name="WallRight" type="StaticBody2D" parent="." unique_id=35025473]
+position = Vector2(1985, 530)
+
+[node name="WallRightCollision" type="CollisionShape2D" parent="WallRight" unique_id=632273436]
+position = Vector2(0, -161)
+shape = SubResource("RectangleShape2D_6wr5o")

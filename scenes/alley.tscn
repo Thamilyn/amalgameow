@@ -1,0 +1,91 @@
+[gd_scene format=3 uid="uid://b2vq7xdhf7kis"]
+
+[ext_resource type="Script" uid="uid://6jlel3cn2pe7" path="res://scenes/main.gd" id="1_8i451"]
+[ext_resource type="PackedScene" uid="uid://c1bobapo1vmuo" path="res://characters/player.tscn" id="1_174d2"]
+[ext_resource type="Texture2D" uid="uid://bjecxxx0e34q3" path="res://assets/backgrounds/alley.png" id="1_556vy"]
+[ext_resource type="Script" uid="uid://dp2kgrsjehbde" path="res://scenes/camera_2d.gd" id="2_174d2"]
+[ext_resource type="PackedScene" uid="uid://cct8k7884o8fb" path="res://scenes/hp_bar_component.tscn" id="2_mxqnx"]
+[ext_resource type="PackedScene" uid="uid://crdq7d6tvmag2" path="res://characters/portal.tscn" id="5_w1fyt"]
+[ext_resource type="PackedScene" uid="uid://byngaqq2671a4" path="res://scenes/commercial_district.tscn" id="6_dnoia"]
+[ext_resource type="PackedScene" uid="uid://cp47q1wk53geo" path="res://characters/tweet.tscn" id="8_42j65"]
+[ext_resource type="PackedScene" uid="uid://cvkr2a2metxnj" path="res://characters/tag_enemy.tscn" id="9_j48fp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_556vy"]
+size = Vector2(2457, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w1fyt"]
+size = Vector2(32, 400)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dnoia"]
+size = Vector2(32, 400)
+
+[node name="Alley" type="Node2D" unique_id=1188976737 node_paths=PackedStringArray("player")]
+script = ExtResource("1_8i451")
+player = NodePath("Player")
+metadata/_edit_vertical_guides_ = [1987.0]
+
+[node name="AlleyBg" type="Sprite2D" parent="." unique_id=817734870]
+position = Vector2(991, 398)
+texture = ExtResource("1_556vy")
+
+[node name="UILayer" type="CanvasLayer" parent="." unique_id=740642933]
+
+[node name="HPBarComponent" parent="UILayer" unique_id=710309823 node_paths=PackedStringArray("player") instance=ExtResource("2_mxqnx")]
+player = NodePath("../../Player")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2099989738 node_paths=PackedStringArray("target")]
+position = Vector2(566, 333)
+script = ExtResource("2_174d2")
+target = NodePath("../Player")
+bound_right = 1980.0
+
+[node name="Player" parent="." unique_id=1253208062 instance=ExtResource("1_174d2")]
+position = Vector2(80, 614)
+
+[node name="Ground" type="StaticBody2D" parent="." unique_id=2105157864]
+position = Vector2(1231, 682)
+
+[node name="GroundCollision" type="CollisionShape2D" parent="Ground" unique_id=1248115668]
+shape = SubResource("RectangleShape2D_556vy")
+
+[node name="Roof" type="StaticBody2D" parent="." unique_id=734327749]
+position = Vector2(1230, 438)
+
+[node name="GroundCollision" type="CollisionShape2D" parent="Roof" unique_id=1705698538]
+position = Vector2(-6, -136)
+shape = SubResource("RectangleShape2D_556vy")
+
+[node name="WallLeft" type="StaticBody2D" parent="." unique_id=1566639053]
+position = Vector2(-16, 380)
+
+[node name="WallLeftCollision" type="CollisionShape2D" parent="WallLeft" unique_id=578461451]
+position = Vector2(-2, 98)
+shape = SubResource("RectangleShape2D_w1fyt")
+
+[node name="WallRight" type="StaticBody2D" parent="." unique_id=2063819996]
+position = Vector2(1966, 532)
+
+[node name="WallRightCollision" type="CollisionShape2D" parent="WallRight" unique_id=300005890]
+shape = SubResource("RectangleShape2D_dnoia")
+
+[node name="Portal" parent="." unique_id=1934571563 instance=ExtResource("5_w1fyt")]
+position = Vector2(1543, 499)
+next_scene = ExtResource("6_dnoia")
+
+[node name="Tweet" parent="." unique_id=1074880767 instance=ExtResource("8_42j65")]
+position = Vector2(696.7367, 443.63852)
+
+[node name="Tweet2" parent="." unique_id=1137845737 instance=ExtResource("8_42j65")]
+position = Vector2(715, 609)
+
+[node name="Tweet3" parent="." unique_id=1055302003 instance=ExtResource("8_42j65")]
+position = Vector2(906, 506)
+
+[node name="TagEnemy" parent="." unique_id=608095612 instance=ExtResource("9_j48fp")]
+position = Vector2(1032, 538)
+
+[node name="TagEnemy2" parent="." unique_id=545818254 instance=ExtResource("9_j48fp")]
+position = Vector2(1256, 383)
+
+[node name="TagEnemy3" parent="." unique_id=1665865378 instance=ExtResource("9_j48fp")]
+position = Vector2(1319, 598)

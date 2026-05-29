@@ -1,0 +1,31 @@
+[gd_resource type="Theme" format=3 uid="uid://d2118ompx6rdc"]
+
+[ext_resource type="FontFile" uid="uid://bfqi4p5llk5ox" path="res://assets/fonts/Orbitron/Orbitron-VariableFont_wght.ttf" id="1_amlv4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i7eh4"]
+bg_color = Color(0.440348, 0.20900014, 0.4862945, 1)
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_amlv4"]
+bg_color = Color(0.7526563, 0.47857267, 0.8079591, 1)
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rspjh"]
+bg_color = Color(0.98271793, 0.35899857, 0.34458092, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uvp42"]
+bg_color = Color(3.5616756e-06, 0.7168664, 0.38695812, 1)
+
+[resource]
+Button/fonts/font = ExtResource("1_amlv4")
+Button/styles/hover = SubResource("StyleBoxFlat_i7eh4")
+Button/styles/normal = SubResource("StyleBoxFlat_amlv4")
+Label/fonts/font = ExtResource("1_amlv4")
+ProgressBar/styles/background = SubResource("StyleBoxFlat_rspjh")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_uvp42")

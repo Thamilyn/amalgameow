@@ -17,7 +17,7 @@ extends CharacterBody2D
 # ── Constants ───────────────────────────────────────────────────────────────
 
 const WALK_SPEED        : float = 180.0   # px / s  (horizontal + depth)
-const RUN_SPEED         : float = 320.0   # px / s  (after dash input)
+const RUN_SPEED         : float = 350.0   # px / s  (after dash input)
 const RUN_THRESHOLD     : float = 0.15    # seconds between two taps to trigger run
 const JUMP_VELOCITY     : float = -520.0  # initial upward z-velocity
 const GRAVITY           : float = 1200.0  # z-axis gravity (px / s²)
@@ -122,6 +122,10 @@ func _ready() -> void:
 
 	if hurtbox:
 		hurtbox.area_entered.connect(_on_hurtbox_area_entered)
+
+	# Restore health carried over from a previous scene.
+	if GameState.player_health >= 0:
+		health = GameState.player_health
 
 	_enter_state(State.IDLE)
 
@@ -623,11 +627,28 @@ func _activate_hitbox(damage: int) -> void:
 		hitbox.set_meta("damage", damage)
 		# Enable for one physics frame.
 		hitbox.monitoring = true
+		_deflect_bullets_in_range()
 		await get_tree().physics_frame
 		hitbox.monitoring = false
 
 	# Emit so the game can react even without an Area2D.
 	attack_landed.emit(damage, global_position)
+
+
+## Destroys any tag_bullets whose centre falls within the active hitbox rectangle.
+func _deflect_bullets_in_range() -> void:
+	if not hitbox:
+		return
+	# Hitbox is 60 x 50 px; allow a small extra margin for feel.
+	const HALF_W := 36.0
+	const HALF_H := 32.0
+	var hpos := hitbox.global_position
+	for bullet in get_tree().get_nodes_in_group("tag_bullet"):
+		if not is_instance_valid(bullet):
+			continue
+		var d = bullet.global_position - hpos
+		if abs(d.x) <= HALF_W and abs(d.y) <= HALF_H:
+			bullet.deflect()
 
 # ---------------------------------------------------------------------------
 # Receiving damage  (called externally or via hurtbox signal)
@@ -666,7 +687,8 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
-	body.take_damage(hitbox.get_meta('damage', 1))
+	print(body)
+	body.take_damage(hitbox.get_meta('damage', 10))
 
 func reset_state() -> void:
 	health = max_health

@@ -1,12 +1,100 @@
 [gd_scene format=3 uid="uid://crdq7d6tvmag2"]
 
+[ext_resource type="Shader" uid="uid://bu1mxogdanv0m" path="res://assets/shaders/glow_colorrect.gdshader" id="1_gat80"]
+[ext_resource type="Script" uid="uid://botupso6l6hai" path="res://characters/portal.gd" id="1_uj1mg"]
+[ext_resource type="Theme" uid="uid://d2118ompx6rdc" path="res://new_theme.tres" id="3_5d35c"]
+[ext_resource type="Texture2D" uid="uid://dcoh4hcmfu0h1" path="res://assets/arrow.png" id="3_aywe1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uj1mg"]
+shader = ExtResource("1_gat80")
+shader_parameter/rect_size = Vector2(0.15, 0.2)
+shader_parameter/bness = 0.92
+shader_parameter/fall_off_scale = 2.07
+shader_parameter/b_offset = 0.26
+
+[sub_resource type="Gradient" id="Gradient_aywe1"]
+colors = PackedColorArray(0.97953254, 0.31270862, 0.99999994, 1, 0.6598697, 0.14334425, 0.8630907, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5d35c"]
+gradient = SubResource("Gradient_aywe1")
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5l472"]
-size = Vector2(248, 196)
+size = Vector2(166, 198)
+
+[sub_resource type="Animation" id="Animation_5d35c"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(56, -140)]
+}
+
+[sub_resource type="Animation" id="Animation_nhcee"]
+resource_name = "arrow_updown"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.40284607, 0.79325867),
+"transitions": PackedFloat32Array(-2, -2, -2),
+"update": 0,
+"values": [Vector2(56, -140), Vector2(56, -180), Vector2(56, -140)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_aypqm"]
+_data = {
+&"RESET": SubResource("Animation_5d35c"),
+&"arrow_updown": SubResource("Animation_nhcee")
+}
 
 [node name="Portal" type="Area2D" unique_id=1934571563]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_uj1mg")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=787842110]
+material = SubResource("ShaderMaterial_uj1mg")
+position = Vector2(-0.9999981, -1.5000067)
+scale = Vector2(2.53125, 2.453125)
+texture = SubResource("GradientTexture2D_5d35c")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=699566704]
-position = Vector2(114, 88)
+position = Vector2(-2, 4)
 shape = SubResource("RectangleShape2D_5l472")
+
+[node name="Label" type="Label" parent="." unique_id=1467982912]
+offset_left = -34.0
+offset_top = -122.0
+offset_right = 37.0
+offset_bottom = -99.0
+theme = ExtResource("3_5d35c")
+theme_override_colors/font_color = Color(1, 1, 0.28627452, 1)
+text = "Exit"
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=731489337]
+offset_left = 56.0
+offset_top = -140.0
+offset_right = 796.9208
+offset_bottom = 616.3159
+rotation = 1.5707964
+scale = Vector2(0.08, 0.08)
+texture = ExtResource("3_aywe1")
+expand_mode = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=923524728]
+libraries/ = SubResource("AnimationLibrary_aypqm")
+autoplay = &"arrow_updown"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 MadTalkGlobals="*uid://domdph40m3s8i"
+GameState="*res://scenes/game_state.gd"
 
 [editor_plugins]
 
