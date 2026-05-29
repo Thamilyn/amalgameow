@@ -1,0 +1,187 @@
+[gd_scene format=3 uid="uid://co2b1r56qrmhi"]
+
+[ext_resource type="Theme" uid="uid://d2118ompx6rdc" path="res://new_theme.tres" id="2_4wrhy"]
+[ext_resource type="Script" uid="uid://pu66uhjrsri0" path="res://characters/boss.gd" id="2_boss"]
+[ext_resource type="Texture2D" uid="uid://cifyweh7a0n4g" path="res://assets/boss_gifs/boss_amalgameow2.png" id="2_dxum7"]
+[ext_resource type="Texture2D" uid="uid://c4p22msbr52js" path="res://assets/boss_gifs/1.png" id="3_lwamq"]
+[ext_resource type="Texture2D" uid="uid://cxectc5xvyo7l" path="res://assets/boss_gifs/2.png" id="4_vxro7"]
+[ext_resource type="Texture2D" uid="uid://buoprewc3dvsl" path="res://assets/boss_gifs/3.png" id="5_1vriw"]
+[ext_resource type="Texture2D" uid="uid://bms0cbe6gtn18" path="res://assets/boss_gifs/4.png" id="6_4wrhy"]
+[ext_resource type="Texture2D" uid="uid://fd4a2xyhcxed" path="res://assets/boss_gifs/5.png" id="7_1vriw"]
+[ext_resource type="Texture2D" uid="uid://4r2ckbgfhs1w" path="res://assets/boss_intro/boss1.png" id="9_rg142"]
+[ext_resource type="Texture2D" uid="uid://b12fhx51piwb5" path="res://assets/boss_intro/boss2.png" id="10_escqd"]
+[ext_resource type="Texture2D" uid="uid://c3bbgy8fynk4n" path="res://assets/boss_intro/boss3.png" id="11_c0tut"]
+[ext_resource type="Texture2D" uid="uid://bg8qq670x6yg" path="res://assets/boss_intro/intro4.png" id="12_kwpww"]
+[ext_resource type="AudioStream" uid="uid://ct7b0f6vs8qda" path="res://assets/laugh-evil-1.ogg" id="13_escqd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dxum7"]
+size = Vector2(217, 183)
+
+[sub_resource type="Animation" id="Animation_1vriw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HammerFist/FistHitbox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_4wrhy"]
+resource_name = "attack"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.20000002, 0.36666667, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HammerFist/FistHitbox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.36666667, 0.6333334),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1kamv"]
+_data = {
+&"RESET": SubResource("Animation_1vriw"),
+&"attack": SubResource("Animation_4wrhy")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fist"]
+size = Vector2(121, 178)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8on28"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_1vriw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_lwamq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_vxro7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_1vriw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_4wrhy")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_rg142")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_escqd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_c0tut")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_kwpww")
+}],
+"loop": true,
+"name": &"boss_intro",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_1vriw")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="Boss" type="CharacterBody2D" unique_id=2102611576]
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("2_boss")
+
+[node name="HPBar" type="ProgressBar" parent="." unique_id=-1293967289]
+offset_left = -114.0
+offset_top = -143.0
+offset_right = 136.0
+offset_bottom = -121.0
+max_value = 50.0
+value = 50.0
+show_percentage = false
+
+[node name="BossNameLabel" type="Label" parent="." unique_id=-1293967290]
+offset_left = -105.0
+offset_top = -172.0
+offset_right = -5.0
+offset_bottom = -149.0
+theme = ExtResource("2_4wrhy")
+text = "MISSINFORMATRON"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1856456443]
+visible = false
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_dxum7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1145975596]
+position = Vector2(3.5, 4.5)
+shape = SubResource("RectangleShape2D_dxum7")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1914020659]
+libraries/ = SubResource("AnimationLibrary_1kamv")
+
+[node name="HammerFist" type="Node2D" parent="." unique_id=-1293967295]
+position = Vector2(-113, -2)
+
+[node name="FistHitbox" type="Area2D" parent="HammerFist" unique_id=-1293967293]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HammerFist/FistHitbox" unique_id=-1293967292]
+position = Vector2(-13.5, 3)
+shape = SubResource("RectangleShape2D_fist")
+disabled = true
+debug_color = Color(0.51398605, 0.7874254, 0.9199174, 1)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2063990993]
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("SpriteFrames_8on28")
+animation = &"boss_intro"
+
+[node name="Laugh" type="AudioStreamPlayer" parent="." unique_id=1945063740]
+stream = ExtResource("13_escqd")
+
+[connection signal="body_entered" from="HammerFist/FistHitbox" to="." method="_on_fist_hitbox_body_entered"]

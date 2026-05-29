@@ -25,6 +25,7 @@
 [ext_resource type="Texture2D" uid="uid://n4c7yc8en1d3" path="res://assets/cata_run/2.png" id="18_4rspn"]
 [ext_resource type="Texture2D" uid="uid://bfnpbudogaxub" path="res://assets/cata_run/3.png" id="19_hsn1j"]
 [ext_resource type="Texture2D" uid="uid://cymjc3xbyos0y" path="res://assets/cata_run/4.png" id="20_dx8gg"]
+[ext_resource type="Texture2D" uid="uid://cpqyy16atb5db" path="res://assets/avoid.png" id="22_qk7w8"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6rrl0"]
 radius = 13.0
@@ -700,10 +701,19 @@ animations = [{
 "name": &"punch_jab",
 "speed": 10.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_qp1es")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_qk7w8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_qp1es")
+}],
 "loop": false,
 "name": &"roll",
-"speed": 10.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -781,6 +791,8 @@ scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_eus45")
 animation = &"idle"
 autoplay = "idle"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1103947337]
 
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://6jlel3cn2pe7" path="res://scenes/main.gd" id="1_7okkn"]
 [ext_resource type="Texture2D" uid="uid://dk53q61g00u8o" path="res://assets/backgrounds/BossArena.png" id="1_kdgpo"]
 [ext_resource type="PackedScene" uid="uid://cct8k7884o8fb" path="res://scenes/hp_bar_component.tscn" id="2_7okkn"]
+[ext_resource type="PackedScene" uid="uid://co2b1r56qrmhi" path="res://characters/boss.tscn" id="3_6wr5o"]
 [ext_resource type="Script" uid="uid://dp2kgrsjehbde" path="res://scenes/camera_2d.gd" id="3_84w8w"]
 [ext_resource type="PackedScene" uid="uid://c1bobapo1vmuo" path="res://characters/player.tscn" id="4_6wr5o"]
 
@@ -15,24 +16,29 @@ size = Vector2(32, 741)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6wr5o"]
 size = Vector2(32, 744)
 
-[node name="BossArena" type="Node2D" unique_id=34756096]
+[node name="BossArena" type="Node2D" unique_id=34756096 node_paths=PackedStringArray("player", "boss")]
 script = ExtResource("1_7okkn")
+player = NodePath("Player")
+boss = NodePath("Boss")
 
 [node name="AlleyBg" type="Sprite2D" parent="." unique_id=2075912620]
 position = Vector2(991, 398)
 texture = ExtResource("1_kdgpo")
+
+[node name="Boss" parent="." unique_id=2102611576 node_paths=PackedStringArray("player", "main") instance=ExtResource("3_6wr5o")]
+position = Vector2(1424.374, 414.28262)
+player = NodePath("../Player")
+main = NodePath("..")
+attack_range = 200.0
+hammer_damage = 20.0
 
 [node name="UILayer" type="CanvasLayer" parent="." unique_id=2084964807]
 
 [node name="HPBarComponent" parent="UILayer" unique_id=710309823 node_paths=PackedStringArray("player") instance=ExtResource("2_7okkn")]
 player = NodePath("../../Player")
 
-[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="UILayer" unique_id=864462199]
-offset_right = 40.0
-offset_bottom = 40.0
-
 [node name="Camera2D" type="Camera2D" parent="." unique_id=2128874546 node_paths=PackedStringArray("target")]
-position = Vector2(566, 333)
+position = Vector2(737, 506)
 script = ExtResource("3_84w8w")
 target = NodePath("../Player")
 bound_left = 6.0

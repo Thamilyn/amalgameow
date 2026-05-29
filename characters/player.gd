@@ -57,7 +57,9 @@ enum State {
 @onready var hitbox       : Area2D          = $Hitbox            # optional – safe-guarded below
 @onready var hurtbox      : Area2D          = $Hurtbox           # optional – safe-guarded below
 @onready var animated_sprite2d : AnimatedSprite2D = $AnimatedSprite2D
-
+@onready var audio_stream_player : AudioStreamPlayer = $AudioStreamPlayer
+@onready var punch_sound := preload("res://assets/Hit4.wav")
+@onready var jump_sound := preload("res://assets/Jump.wav")
 
 
 # ── Internal state ───────────────────────────────────────────────────────────
@@ -258,9 +260,11 @@ func _enter_state(new_state: State) -> void:
 		State.RUN:
 			_play_anim("run")
 		State.JUMP:
+			play_sound(jump_sound, -10.0)
 			_z_velocity = JUMP_VELOCITY
 			_play_anim("jump")
 		State.ATTACK_LIGHT:
+			play_sound(punch_sound, -10.0)
 			_attack_hit = false
 			_play_anim("attack_light_%d" % (_combo_count + 1))
 		State.ATTACK_FINISHER:
@@ -279,12 +283,14 @@ func _enter_state(new_state: State) -> void:
 			if _dodge_dir == Vector2.ZERO:
 				_dodge_dir = Vector2(_facing, 0.0)
 			if animated_sprite2d:
-				if _dodge_tween:
-					_dodge_tween.kill()
-				animated_sprite2d.rotation = 0.0
-				_dodge_tween = create_tween()
-				_dodge_tween.tween_property(animated_sprite2d, "rotation", TAU, DODGE_DURATION)
-				_dodge_tween.tween_callback(func(): animated_sprite2d.rotation = 0.0)
+				roll_player()
+				#_play_anim("roll")
+				#if _dodge_tween:
+					#_dodge_tween.kill()
+				#animated_sprite2d.rotation = 0.0
+				#_dodge_tween = create_tween()
+				#_dodge_tween.tween_property(animated_sprite2d, "rotation", TAU, DODGE_DURATION)
+				#_dodge_tween.tween_callback(func(): animated_sprite2d.rotation = 0.0)
 		State.HURT:
 			if animated_sprite2d:
 				var tw := create_tween()
@@ -710,3 +716,17 @@ func reset_state() -> void:
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if hitbox.monitoring:
 		hitbox.monitoring = false
+
+func play_sound(sound : AudioStream, volume: float):
+	audio_stream_player.stream = sound
+	audio_stream_player.volume_db = volume
+	audio_stream_player.play()
+
+func roll_player():
+	if _dodge_tween:
+		_dodge_tween.kill()
+	animated_sprite2d.rotation = 0.0
+	_dodge_tween = create_tween()
+	_dodge_tween.tween_property(animated_sprite2d, "rotation", TAU, DODGE_DURATION)
+	_dodge_tween.tween_callback(func(): animated_sprite2d.rotation = 0.0)
+	

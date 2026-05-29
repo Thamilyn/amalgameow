@@ -14,9 +14,8 @@ func _on_body_entered(body: Node2D) -> void:
 	GameState.player_health = body.health
 
 	# Reparent background music to the root so it survives the scene change.
-	var music := get_tree().current_scene.find_child("BackgroundMusic", true, false)
-	if music:
-		music.reparent(get_tree().root)
+	#if GameState.background_music and is_instance_valid(GameState.background_music):
+		#GameState.background_music.reparent(get_tree().root)
 
 	_fade_and_transition()
 

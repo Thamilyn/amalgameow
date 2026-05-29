@@ -2,9 +2,12 @@ extends Node2D
 
 
 @export var player : CharacterBody2D
+@export var boss : CharacterBody2D
 
 @onready var game_over_scene := preload("res://scenes/game_over_ui.tscn")
+@onready var end_scene := preload("res://scenes/end_scene.tscn")
 @onready var ui_layer = $UILayer
+#@onready var background_music: AudioStreamPlayer = $BackgroundMusic
 
 var player_start_position := Vector2.ZERO
 var game_over_instance = null
@@ -17,11 +20,18 @@ var game_over_instance = null
 ##   "overrides"    : Dictionary   – exported properties that differ from defaults
 var _enemy_records: Array = []
 
+signal stage_restarted
 
 func _ready() -> void:
 	if player != null:
 		player.connect("died", _on_player_death)
 		player_start_position = player.position
+
+	if boss != null:
+		boss.connect("boss_died", on_boss_death)
+	if has_node("BackgroundMusic"):
+		GameState.background_music = get_node("BackgroundMusic")
+		GameState.background_music.reparent.call_deferred(get_tree().root)
 	_collect_enemies()
 
 
@@ -78,11 +88,24 @@ func _on_try_again() -> void:
 	player.position = player_start_position
 	player.reset_state()
 	_respawn_enemies()
+	emit_signal("stage_restarted")
 	game_over_instance.disconnect("try_again", _on_try_again)
 	game_over_instance.queue_free()
 	game_over_instance = null
 
 
+func on_boss_death():
+	if GameState.background_music:
+		GameState.background_music.stop()
+	var timer = Timer.new()
+	timer.one_shot = true
+	timer.wait_time = 2.0
+	timer.connect("timeout", go_to_endscene)
+	add_child(timer)
+	timer.start()
+
+func go_to_endscene():
+	get_tree().change_scene_to_packed(end_scene)
 # ---------------------------------------------------------------------------
 # Enemy respawn
 # ---------------------------------------------------------------------------

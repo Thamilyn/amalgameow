@@ -25,7 +25,6 @@ func _setup() -> void:
 
 
 func on_health_changed(amount: int) -> void:
-	print('new hp: ', amount)
 	hp_bar.value = amount
 	if hp_bar.value <= danger_hp:
 		hp_bar.texture_over = danger_texture

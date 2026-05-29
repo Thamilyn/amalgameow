@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://c7baxppqcy6g4"
+path="res://.godot/imported/Soft Patch Signal.mp3-9e7c0a73dc9e804cc200e9a4bd9e05f8.mp3str"
+
+[deps]
+
+source_file="res://assets/music/Soft Patch Signal.mp3"
+dest_files=["res://.godot/imported/Soft Patch Signal.mp3-9e7c0a73dc9e804cc200e9a4bd9e05f8.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
