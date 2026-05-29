@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://mtlpjdjb1td7"]
+
+[ext_resource type="VideoStream" uid="uid://xgv8hkqkedpe" path="res://assets/ThinkLogo.ogv" id="1_gs8cf"]
+
+[node name="ThinkVideo" type="CanvasLayer" unique_id=487421073]
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="." unique_id=1332625730]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("1_gs8cf")
+autoplay = true
